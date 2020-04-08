@@ -85,11 +85,20 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: "People don't think it be like it is",
+    date: 'April 8th, 2020',
+    firstParagraph: `BUT`,
+
+    secondParagraph: `IT`,
+
+    thirdParagraph: `DO`
   }
 ];
 
 /* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
-  
+
   <div class="article">
     <h2>{title of the article}</h2>
     <p class="date">{date of the article}</p>
@@ -112,3 +121,49 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+let articles = document.querySelector('.articles');
+
+function createArticle({title, date, firstParagraph, secondParagraph, thirdParagraph}){
+
+  let article = document.createElement('div');
+  let articleTitle = document.createElement('h2');
+  let articleDate = document.createElement('p');
+  let articleContent1 = document.createElement('p');
+  let articleContent2 = document.createElement('p');
+  let articleContent3 = document.createElement('p');
+  let button = document.createElement('span');
+
+  article.appendChild(articleTitle);
+  article.appendChild(articleDate);
+  article.appendChild(articleContent1);
+  article.appendChild(articleContent2);
+  article.appendChild(articleContent3);
+  article.appendChild(button);
+  
+  article.classList.add('article');
+  articleDate.classList.add('date');
+  button.classList.add('expandButton')
+
+  articleTitle.textContent = title;
+  articleDate.textContent = date;
+  articleContent1.textContent = firstParagraph;
+  articleContent2.textContent = secondParagraph;
+  articleContent3.textContent = thirdParagraph;
+  button.textContent = 'Open Article';
+
+  button.addEventListener('click', ()=>{
+    article.classList.toggle('article-open');
+    if(button.textContent === 'Open Article'){
+    button.textContent = 'Close Article';
+    } else{
+      button.textContent = 'Open Article';
+    }
+  })
+  return article;
+}
+
+let articleData = data.map(data => createArticle(data));
+
+articleData.forEach(item =>{
+  articles.appendChild(item);
+})
